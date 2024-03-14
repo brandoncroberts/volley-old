@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "amplify-sandbox": "npx amplify sandbox --profile=amplify-dev"
   },
   "dependencies": {
     "aws-amplify": "^6.0.20",
