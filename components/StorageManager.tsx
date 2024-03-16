@@ -11,7 +11,7 @@ export const StorageManagerUploadActionsExample = () => {
           uploadData
         );
       }}
-      acceptedFileTypes={["image/*"]}
+      acceptedFileTypes={["video/*"]}
       accessLevel="guest"
       autoUpload={false}
       maxFileCount={1}
