@@ -4,6 +4,7 @@ import "./globals.css";
 
 import "@aws-amplify/ui-react/styles.css";
 import ConfigureAmplifyClientSide from "@/components/ConfigureAmplify";
+import { AppLayout } from "@/components/AppLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="h-full bg-white">
+      <body className={`${inter.className} h-full`}>
         <ConfigureAmplifyClientSide />
-        {children}
+        <AppLayout>{children}</AppLayout>
       </body>
     </html>
   );
