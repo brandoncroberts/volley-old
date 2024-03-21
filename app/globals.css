@@ -14,7 +14,8 @@
   }
 }
 
-body {
+/* body {
+  TODO: Figure out how this dark-mode switch works. The config was copied from react-aria-components starter-kit
   @apply bg-white dark:bg-zinc-900;
   color-scheme: dark light;
-}
+} */
