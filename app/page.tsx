@@ -1,38 +1,48 @@
-import { revalidatePath } from "next/cache";
+"use client";
 
-import { AuthGetCurrentUserServer, cookiesClient } from "@/utils/amplify-utils";
+import { StorageManagerUploadActionsExample } from "@/components/StorageManager";
+import { StorageVideo } from "@/components/StorageVideo";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+import { ListPaginateOutput, list } from "aws-amplify/storage";
+import { useEffect, useState } from "react";
 
-import Logout from "@/components/Logout";
+function Storage() {
+  const [listData, setListData] = useState<ListPaginateOutput>();
+  const [isLoading, setLoading] = useState(false);
 
-async function App() {
-  const user = await AuthGetCurrentUserServer();
-  const { data: todos } = await cookiesClient.models.Todo.list();
-
-  async function addTodo(data: FormData) {
-    "use server";
-    const title = data.get("title") as string;
-    await cookiesClient.models.Todo.create({
-      content: title,
-      isDone: false,
-      priority: "medium",
-    });
-    revalidatePath("/");
-  }
+  useEffect(() => {
+    const fetchList = async () => {
+      try {
+        setLoading(true);
+        const result = await list();
+        setListData(result);
+      } catch (error) {
+        console.error(error);
+      }
+      setLoading(false);
+    };
+    fetchList();
+  }, []);
 
   return (
     <>
-      <h1>Hello, Amplify 👋</h1>
-      {user && <Logout />}
-      <form action={addTodo}>
-        <input type="text" name="title" />
-        <button type="submit">Add Todo</button>
-      </form>
-
-      <ul>
-        {todos && todos.map((todo) => <li key={todo.id}>{todo.content}</li>)}
-      </ul>
+      <StorageManagerUploadActionsExample />
+      {isLoading
+        ? "loading"
+        : listData?.items.map((x, idx) => {
+            console.log("🚀 ~ Storage ~ x.key:", x.key);
+            return (
+              <StorageVideo
+                key={idx}
+                alt="fallback cat"
+                accessLevel="guest"
+                videoKey="Screen Recording 2024-02-12 at 09.41.54.mov"
+              />
+            );
+          })}
     </>
   );
 }
 
-export default App;
+export default withAuthenticator(Storage);

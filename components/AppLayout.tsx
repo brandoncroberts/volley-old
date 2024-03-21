@@ -1,17 +1,10 @@
 "use client";
 import { FC, Fragment, ReactNode, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  Bars3Icon,
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-
+import { Bars3Icon, HomeIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import { AuthUser } from "aws-amplify/auth";
+import Image from "next/image";
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
 ];
@@ -20,9 +13,10 @@ function classNames(...classes: string[]) {
 }
 interface AppLayoutProps {
   children: ReactNode;
+  user?: AuthUser;
 }
 
-export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
+const SideBarLayout: FC<AppLayoutProps> = ({ children, user }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -166,13 +160,15 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
                     href="#"
                     className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
                   >
-                    <img
-                      className="h-8 w-8 rounded-full bg-gray-50"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
+                    <Image
+                      height={8}
+                      width={8}
+                      className="h-8 w-8"
+                      src={"/tennis-ball.svg"}
+                      alt="tennis-ball"
                     />
+                    <p>u/{user?.username}</p>
                     <span className="sr-only">Your profile</span>
-                    <span aria-hidden="true">Tom Cook</span>
                   </a>
                 </li>
               </ul>
@@ -194,11 +190,14 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
           </div>
           <a href="#">
             <span className="sr-only">Your profile</span>
-            <img
-              className="h-8 w-8 rounded-full bg-gray-50"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
+            <Image
+              height={8}
+              width={8}
+              className="h-8 w-8"
+              src={"/tennis-ball.svg"}
+              alt="tennis-ball"
             />
+            <p>u/{user?.username}</p>
           </a>
         </div>
 
@@ -209,3 +208,5 @@ export const AppLayout: FC<AppLayoutProps> = ({ children }) => {
     </>
   );
 };
+
+export const AppLayout = withAuthenticator(SideBarLayout);
