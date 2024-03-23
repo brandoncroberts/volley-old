@@ -22,4 +22,10 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Video Processing Research
 
-- Deploy custom YOLOV8 model to Sagemaker, as explained in these docs https://docs.ultralytics.com/integrations/amazon-sagemaker/. And then upload the videos to the Sagemaker endpoint for processing from Amplify app. See some thoughts about this from this Gemeni Chat https://gemini.google.com/app/4f6c00620156bb53
+Ideas for video processing in the app:
+
+1. Deploy custom YOLOV8 model to Sagemaker, as explained in these docs https://docs.ultralytics.com/integrations/amazon-sagemaker/. And then upload the videos to the Sagemaker endpoint for processing from Amplify app. See some thoughts about this from this Gemeni Chat https://gemini.google.com/app/4f6c00620156bb53
+
+2. Self Host with Roboflow Inference
+   https://github.com/roboflow/inference
+   https://blog.roboflow.com/how-to-train-yolov8-on-a-custom-dataset/#preparing-a-custom-dataset-for-yolov8
